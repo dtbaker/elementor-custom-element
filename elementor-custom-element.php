@@ -26,7 +26,7 @@ class ElementorCustomElement {
 	}
 
 	public function init(){
-		add_action( 'elementor/widgets/widgets_registered', array( $this, 'widgets_registered' ) );
+		add_action( 'elementor/init', array( $this, 'widgets_registered' ) );
 	}
 
 	public function widgets_registered() {
@@ -44,6 +44,28 @@ class ElementorCustomElement {
 			}
 			if ( $template_file && is_readable( $template_file ) ) {
 				require_once $template_file;
+			}
+		}
+		if ( defined( 'ELEMENTOR_PATH' ) && class_exists( 'Elementor\Widget_Base' ) ) {
+			// get our own widgets up and running:
+			// copied from widgets-manager.php
+
+			if ( class_exists( 'Elementor\Plugin' ) ) {
+				if ( is_callable( 'Elementor\Plugin', 'instance' ) ) {
+					$elementor = Elementor\Plugin::instance();
+					if ( isset( $elementor->widgets_manager ) ) {
+						if ( method_exists( $elementor->widgets_manager, 'register_widget_type' ) ) {
+
+							$widget_file   = 'plugins/elementor/my-widget.php';
+							$template_file = locate_template( $widget_file );
+							if ( $template_file && is_readable( $template_file ) ) {
+								require_once $template_file;
+								Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Elementor\Widget_My_Custom_Elementor_Thing() );
+
+							}
+						}
+					}
+				}
 			}
 		}
 	}
