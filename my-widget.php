@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class Widget_My_Custom_Elementor_Thing extends Widget_Base {
 
-	public function get_id() {
+	public function get_name() {
 		return 'my-blog-posts';
 	}
 
@@ -20,13 +20,13 @@ class Widget_My_Custom_Elementor_Thing extends Widget_Base {
 
 	protected function _register_controls() {
 
-		$this->add_control(
-			'section_blog_posts',
+		$this->start_controls_section(
+			'section_my_custom',
 			[
-				'label' => __( 'Blog Posts', 'elementor-custom-element' ),
-				'type' => Controls_Manager::SECTION,
+				'label' => esc_html__( 'Blog Posts', 'elementor' ),
 			]
 		);
+		
 
 		$this->add_control(
 			'some_text',
@@ -35,7 +35,6 @@ class Widget_My_Custom_Elementor_Thing extends Widget_Base {
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
 				'title' => __( 'Enter some text', 'elementor-custom-element' ),
-				'section' => 'section_blog_posts',
 			]
 		);
 
@@ -45,7 +44,6 @@ class Widget_My_Custom_Elementor_Thing extends Widget_Base {
 				'label' => __( 'Number of Posts', 'elementor-custom-element' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 5,
-				'section' => 'section_blog_posts',
 				'options' => [
 					1 => __( 'One', 'elementor-custom-element' ),
 					2 => __( 'Two', 'elementor-custom-element' ),
@@ -54,6 +52,8 @@ class Widget_My_Custom_Elementor_Thing extends Widget_Base {
 				]
 			]
 		);
+		
+		$this->end_controls_section();
 
 	}
 
@@ -90,5 +90,4 @@ class Widget_My_Custom_Elementor_Thing extends Widget_Base {
 
 }
 
-Plugin::instance()->widgets_manager->register_widget( 'Elementor\Widget_My_Custom_Elementor_Thing' );
 
