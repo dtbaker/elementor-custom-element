@@ -14,8 +14,9 @@ class Widget_My_Custom_Elementor_Thing extends Widget_Base {
 	}
 
 	public function get_icon() {
-		// Icon name from the Elementor font file, as per http://dtbaker.net/web-development/creating-your-own-custom-elementor-widgets/
-		return 'post-list';
+		// Icon name from Font Awesome 4.7.0
+		// http://fontawesome.io/cheatsheet/
+		return 'fa fa-star';
 	}
 
 	protected function _register_controls() {
@@ -26,7 +27,7 @@ class Widget_My_Custom_Elementor_Thing extends Widget_Base {
 				'label' => esc_html__( 'Blog Posts', 'elementor' ),
 			]
 		);
-		
+
 
 		$this->add_control(
 			'some_text',
@@ -52,7 +53,7 @@ class Widget_My_Custom_Elementor_Thing extends Widget_Base {
 				]
 			]
 		);
-		
+
 		$this->end_controls_section();
 
 	}
@@ -60,9 +61,10 @@ class Widget_My_Custom_Elementor_Thing extends Widget_Base {
 	protected function render( $instance = [] ) {
 
 		// get our input from the widget settings.
+		$settings = $this->get_settings();
 
-		$custom_text = ! empty( $instance['some_text'] ) ? $instance['some_text'] : ' (no text was entered ) ';
-		$post_count = ! empty( $instance['posts_per_page'] ) ? (int)$instance['posts_per_page'] : 5;
+		$custom_text = ! empty( $settings['some_text'] ) ? $settings['some_text'] : ' (no text was entered ) ';
+		$post_count = ! empty( $settings['posts_per_page'] ) ? (int)$settings['posts_per_page'] : 5;
 
 		?>
 
@@ -89,5 +91,3 @@ class Widget_My_Custom_Elementor_Thing extends Widget_Base {
 	public function render_plain_content( $instance = [] ) {}
 
 }
-
-
