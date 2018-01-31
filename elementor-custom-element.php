@@ -43,7 +43,9 @@ class ElementorCustomElement {
 				$template_file = plugin_dir_path(__FILE__).'my-widget.php';
 			}
 			if ( $template_file && is_readable( $template_file ) ) {
+				// allow the widget to be located in the plugin folder
 				require_once $template_file;
+            	Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Elementor\Widget_My_Custom_Elementor_Thing() );
 			}
 		}
 		if ( defined( 'ELEMENTOR_PATH' ) && class_exists( 'Elementor\Widget_Base' ) ) {
